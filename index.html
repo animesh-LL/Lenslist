@@ -1,54 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LensList</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: aquamarine;
-        }
-        #countdown {
-            font-size: 2em;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LensList | Hire Photographers in India</title>
+  <meta name="description" content="LensList helps people discover and connect with photographers and camera teams across India.">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Coming Soon!</h1>
-    <div id="countdown"></div>
-    <img src="./logo1.png" alt="logo" style="width: 100px; margin-top: 20px;">
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="LensList home">
+      <span class="brand-mark">LL</span>
+      <span>LensList</span>
+    </a>
 
-    <script>
-        // Set the date we're counting down to
-        const launchDate = new Date('2026-01-25T00:00:00').getTime();
+    <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-        // Update the countdown every 1 hr
-        const x = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="#discover">Discover</a>
+      <a href="#lead">Request Booking</a>
+      <a href="#admin">Admin</a>
+    </nav>
+  </header>
 
-            // Calculations for days, hours, minutes, and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  <main>
+    <section id="home" class="view view-home active" aria-labelledby="hero-title">
+      <div class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Photographers and camera teams across India</p>
+          <h1 id="hero-title">Find the Perfect Photographer for Your Event</h1>
+          <p class="hero-copy">Browse verified wedding, birthday, corporate, and product photographers by city, budget, style, and availability.</p>
+        </div>
+      </div>
 
-            // Display the result in the element with id="countdown"
-            document.getElementById("countdown").innerHTML = `${days}days ${hours}hours`;
+      <form id="home-search-form" class="search-panel" aria-label="Search photographers">
+        <label>
+          <span>Location</span>
+          <select id="home-location">
+            <option value="">All cities</option>
+          </select>
+        </label>
 
-            // If the countdown is over, write some text 
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown").innerHTML = "We're live!";
-            }
-        }, 1000);
-    </script>
+        <label>
+          <span>Budget range</span>
+          <select id="home-budget">
+            <option value="">Any budget</option>
+            <option value="0-25000">Under Rs. 25,000</option>
+            <option value="25000-50000">Rs. 25,000 - Rs. 50,000</option>
+            <option value="50000-90000">Rs. 50,000 - Rs. 90,000</option>
+            <option value="90000-200000">Rs. 90,000+</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Event type</span>
+          <select id="home-event-type">
+            <option value="">All events</option>
+            <option value="wedding">Wedding</option>
+            <option value="birthday">Birthday</option>
+            <option value="corporate">Corporate</option>
+            <option value="product shoot">Product shoot</option>
+          </select>
+        </label>
+
+        <button class="btn btn-primary" type="submit">Find Photographers</button>
+      </form>
+
+      <section class="section-band">
+        <div class="section-heading">
+          <p class="eyebrow">Popular picks</p>
+          <h2>Trusted teams for every brief</h2>
+        </div>
+        <div id="featured-grid" class="photographer-grid"></div>
+      </section>
+    </section>
+
+    <section id="discover" class="view" aria-labelledby="discover-title">
+      <div class="page-shell">
+        <div class="page-intro">
+          <div>
+            <p class="eyebrow">Marketplace</p>
+            <h1 id="discover-title">Discover photographers</h1>
+          </div>
+          <a class="btn btn-secondary" href="#lead">Request a match</a>
+        </div>
+
+        <form id="listing-filter-form" class="filter-bar" aria-label="Filter photographers">
+          <label>
+            <span>Location</span>
+            <select id="filter-location">
+              <option value="">All cities</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Budget</span>
+            <select id="filter-budget">
+              <option value="">Any budget</option>
+              <option value="0-25000">Under Rs. 25,000</option>
+              <option value="25000-50000">Rs. 25,000 - Rs. 50,000</option>
+              <option value="50000-90000">Rs. 50,000 - Rs. 90,000</option>
+              <option value="90000-200000">Rs. 90,000+</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Event type</span>
+            <select id="filter-event-type">
+              <option value="">All events</option>
+              <option value="wedding">Wedding</option>
+              <option value="birthday">Birthday</option>
+              <option value="corporate">Corporate</option>
+              <option value="product shoot">Product shoot</option>
+            </select>
+          </label>
+
+          <button class="btn btn-primary" type="submit">Apply</button>
+        </form>
+
+        <div class="result-meta">
+          <p id="result-count"></p>
+          <button id="clear-filters" class="link-button" type="button">Clear filters</button>
+        </div>
+
+        <div id="listing-grid" class="photographer-grid"></div>
+        <div id="empty-state" class="empty-state hidden">
+          <h2>No exact matches yet</h2>
+          <p>Try another city, budget, or event type.</p>
+          <a class="btn btn-primary" href="#lead">Send your requirement</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="profile" class="view" aria-live="polite"></section>
+
+    <section id="lead" class="view" aria-labelledby="lead-title">
+      <div class="split-layout page-shell">
+        <div class="lead-copy">
+          <p class="eyebrow">Booking request</p>
+          <h1 id="lead-title">Tell us what you need</h1>
+          <p>Share the basics and LensList will simulate a booking request in this MVP. Leads are stored locally in your browser.</p>
+          <div id="lead-list" class="saved-leads"></div>
+        </div>
+
+        <form id="lead-form" class="form-panel">
+          <label>
+            <span>Event type</span>
+            <select id="lead-event-type" required>
+              <option value="">Select event</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Corporate">Corporate</option>
+              <option value="Product shoot">Product shoot</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Budget</span>
+            <input id="lead-budget" type="number" min="5000" step="1000" placeholder="50000" required>
+          </label>
+
+          <label>
+            <span>Date</span>
+            <input id="lead-date" type="date" required>
+          </label>
+
+          <label>
+            <span>Location</span>
+            <input id="lead-location" type="text" placeholder="Mumbai, Maharashtra" required>
+          </label>
+
+          <label>
+            <span>Your name</span>
+            <input id="lead-name" type="text" placeholder="Aarav Mehta" required>
+          </label>
+
+          <label>
+            <span>Mobile number</span>
+            <input id="lead-phone" type="tel" placeholder="9876543210" required>
+          </label>
+
+          <button class="btn btn-primary" type="submit">Request Booking</button>
+          <p id="lead-message" class="form-message" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="admin" class="view" aria-labelledby="admin-title">
+      <div class="split-layout page-shell">
+        <div>
+          <p class="eyebrow">Admin</p>
+          <h1 id="admin-title">Add a photographer</h1>
+          <p class="muted">This form updates localStorage to simulate a lightweight backend. Refreshing the page keeps newly added profiles in this browser.</p>
+          <div class="admin-summary">
+            <strong id="photographer-total">0</strong>
+            <span>photographers in the marketplace</span>
+          </div>
+        </div>
+
+        <form id="admin-form" class="form-panel">
+          <label>
+            <span>Name</span>
+            <input id="admin-name" type="text" placeholder="Priya Sharma Studios" required>
+          </label>
+
+          <label>
+            <span>City</span>
+            <input id="admin-location" type="text" placeholder="Jaipur" required>
+          </label>
+
+          <div class="form-row">
+            <label>
+              <span>Min price</span>
+              <input id="admin-min-price" type="number" min="5000" step="1000" placeholder="30000" required>
+            </label>
+            <label>
+              <span>Max price</span>
+              <input id="admin-max-price" type="number" min="5000" step="1000" placeholder="85000" required>
+            </label>
+          </div>
+
+          <label>
+            <span>Specializations</span>
+            <input id="admin-specializations" type="text" placeholder="Wedding, Corporate, Product shoot" required>
+          </label>
+
+          <label>
+            <span>Description</span>
+            <textarea id="admin-description" rows="4" placeholder="A compact studio focused on candid event stories and fast delivery." required></textarea>
+          </label>
+
+          <button class="btn btn-primary" type="submit">Add Photographer</button>
+          <p id="admin-message" class="form-message" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>LensList MVP</span>
+    <span>Marketplace for photographers and camera teams in India</span>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
-
